@@ -1,7 +1,6 @@
 package com.jutongji.bgk.controller;
 
-import com.jutongji.bgk.dao.TaskWorkMapper;
-import com.jutongji.bgk.model.TaskWork;
+import com.jutongji.bgk.dao.UserMapper;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -17,18 +16,12 @@ import java.util.Date;
 public class DemoController {
 
     @Autowired
-    TaskWorkMapper taskWorkMapper;
+    UserMapper userMapper;
 
     @ApiOperation("欢迎controller")
     @GetMapping("/hello")
-    @ResponseBody
     public String hello(){
         System.out.println("进入Controller");
-        TaskWork taskWork = new TaskWork();
-        taskWork.setUserId(222);
-        taskWork.setHomeworkId(10);
-        taskWork.setCreatedAt(new Date());
-        taskWorkMapper.insert(taskWork);
         return "HELLO,xu!";
     }
 

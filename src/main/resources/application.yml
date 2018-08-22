@@ -3,9 +3,9 @@ server:
 spring:
     datasource:
       name: ts
-      url: jdbc:mysql://115.159.149.177:3306/db_training?useUnicode=true&autoReconnect=true&rewriteBatchedStatements=TRUE
-      username: market_audit
-      password: UGi6t3d4S
+      url: jdbc:mysql://115.159.149.177:3306/xuwei?useUnicode=true&autoReconnect=true&rewriteBatchedStatements=TRUE
+      username: xuw
+      password: xuw@123
       type: com.alibaba.druid.pool.DruidDataSource
       driver-class-name: com.mysql.jdbc.Driver
       filters: wall,stat
@@ -27,7 +27,7 @@ spring:
       suffix: .html
       mode: HTML5
       encoding: UTF-8
-      content-type: text/html
+      #content-type: text/html
       strategy:
         content:
           enabled: true
