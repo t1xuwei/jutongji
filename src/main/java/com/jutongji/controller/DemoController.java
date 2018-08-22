@@ -1,15 +1,14 @@
-package com.jutongji.bgk.controller;
+package com.jutongji.controller;
 
-import com.jutongji.bgk.dao.UserMapper;
+import com.jutongji.dao.UserMapper;
+import com.sun.tools.doclets.formats.html.SourceToHTMLConverter;
 import io.swagger.annotations.ApiOperation;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Date;
 
 @RestController
 @EnableAutoConfiguration
@@ -24,6 +23,16 @@ public class DemoController {
         System.out.println("进入Controller");
         return "HELLO,xu!";
     }
+
+    @ApiOperation("需要管理员权限访问")
+    @GetMapping("/adminHello")
+    @RequiresRoles("admin")
+    @RequiresPermissions("sayhi")
+    public String adminHello(){
+        return "admin hello!!!";
+    }
+
+
 
 
 

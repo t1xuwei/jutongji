@@ -1,13 +1,11 @@
-package com.jutongji.bgk.dao;
+package com.jutongji.dao;
 
-import com.jutongji.bgk.custommapper.CustomMapper;
-import com.jutongji.bgk.model.User;
+import com.jutongji.custommapper.CustomMapper;
+import com.jutongji.model.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
-import org.springframework.stereotype.Component;
-import tk.mybatis.mapper.common.MySqlMapper;
 
 /**
  * Created by wei on 2017/7/18.

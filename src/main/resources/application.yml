@@ -1,9 +1,11 @@
 server:
   port: 90
 spring:
+    application:
+      name: jutongji
     datasource:
       name: ts
-      url: jdbc:mysql://115.159.149.177:3306/xuwei?useUnicode=true&autoReconnect=true&rewriteBatchedStatements=TRUE
+      url: jdbc:mysql://115.159.149.177:3306/jutongji?useUnicode=true&autoReconnect=true&rewriteBatchedStatements=TRUE
       username: xuw
       password: xuw@123
       type: com.alibaba.druid.pool.DruidDataSource
@@ -37,6 +39,16 @@ mybatis:
   type-aliases-package: com.example.model
   configuration:
       mapUnderscoreToCamelCase: true
+logging:
+    file: /data/logs/${spring.application.name}.log
+    level:
+      root: info
+      com:
+        jutongji:
+            dao: DEBUG
+    pattern:
+      console: "%d{yyyy-MM-dd HH:mm:ss:SSS}  [%thread] %-5level %logger{36}.%M [%L] - [%X{TRACE_ID}] %msg%n"
+      file: "%d{yyyy-MM-dd HH:mm:ss:SSS} [%thread] %-5level %logger{36} - [%X{TRACE_ID}] %msg%n"
 #thymelea模板配置
 
 #mapper:

@@ -1,4 +1,4 @@
-package com.jutongji.bgk.config;
+package com.jutongji.config;
 
 /**
  * @author: xuw
@@ -25,7 +25,7 @@ public class SwaggerConfig {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.jutongji.bgk.controller"))
+                .apis(RequestHandlerSelectors.basePackage("com.jutongji.controller"))
                 .paths(PathSelectors.any())
                 .build();
     }

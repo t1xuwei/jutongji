@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jutongji.dao.PermissionMapper">
+  <resultMap id="BaseResultMap" type="com.jutongji.model.Permission">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="permission_name" jdbcType="VARCHAR" property="permissionName" />
+    <result column="role_id" jdbcType="INTEGER" property="roleId" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    id, permission_name, role_id
+  </sql>
+
+</mapper>

@@ -1,4 +1,4 @@
-package com.jutongji.bgk.custommapper;
+package com.jutongji.custommapper;
 
 import tk.mybatis.mapper.common.MySqlMapper;
 

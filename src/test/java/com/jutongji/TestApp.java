@@ -1,4 +1,4 @@
-package com.jutongji.bgk;
+package com.jutongji;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
