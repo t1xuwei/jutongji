@@ -14,6 +14,12 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 
+/**
+ * 实现基于shiro控制的核心代码
+ * 1.mvn依赖
+ * 2.ShiroConfiguration
+ * 3.controller层的注解
+ */
 //实现AuthorizingRealm接口用户用户认证
 public class MyShiroRealm extends AuthorizingRealm {
 
