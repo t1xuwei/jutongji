@@ -1,4 +1,4 @@
-package com.jutongji.dao;
+package com.jutongji.repository;
 
 import com.jutongji.custommapper.CustomMapper;
 import com.jutongji.model.Permission;

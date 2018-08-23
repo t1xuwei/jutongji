@@ -1,7 +1,6 @@
 package com.jutongji.controller;
 
-import com.jutongji.dao.UserMapper;
-import com.sun.tools.doclets.formats.html.SourceToHTMLConverter;
+import com.jutongji.repository.UserMapper;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresRoles;

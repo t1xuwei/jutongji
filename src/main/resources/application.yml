@@ -23,6 +23,9 @@ spring:
       test-on-return: false
       pool-prepared-statements: true
       max-open-prepared-statements: 20
+    jpa:
+      open-in-view: true
+      show-sql: true
     thymeleaf:
       cache: false
       prefix: classpath:/templates/

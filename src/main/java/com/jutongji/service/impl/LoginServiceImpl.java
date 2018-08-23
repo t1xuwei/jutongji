@@ -1,8 +1,8 @@
 package com.jutongji.service.impl;
 
-import com.jutongji.dao.PermissionMapper;
-import com.jutongji.dao.UserMapper;
-import com.jutongji.dao.UserRoleMapper;
+import com.jutongji.repository.PermissionMapper;
+import com.jutongji.repository.UserMapper;
+import com.jutongji.repository.UserRoleMapper;
 import com.jutongji.model.Permission;
 import com.jutongji.model.User;
 import com.jutongji.model.UserRole;
@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 

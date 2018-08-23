@@ -1,8 +1,8 @@
 package com.jutongji;
 
-import com.jutongji.dao.PermissionMapper;
-import com.jutongji.dao.UserMapper;
-import com.jutongji.dao.UserRoleMapper;
+import com.jutongji.repository.PermissionMapper;
+import com.jutongji.repository.UserMapper;
+import com.jutongji.repository.UserRoleMapper;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
