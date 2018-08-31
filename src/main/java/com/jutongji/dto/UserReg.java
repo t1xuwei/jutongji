@@ -23,7 +23,6 @@ public class UserReg
     @NotBlank
     String username;
 
-    @NotNull
     Integer count;
 
     @NotBlank(message = "密码不能为空")

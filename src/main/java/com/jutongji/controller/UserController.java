@@ -25,6 +25,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -54,7 +55,7 @@ public class UserController {
 
     protected final static String errorInfo = "errorInfo";
 
-    private static final String registerView = "user/register";
+    private static final String registerView = "/user/register";
 
     private static final String successView = "index";
 
@@ -93,7 +94,7 @@ public class UserController {
 
     protected final static String addInfo = "addInfo";
 
-    @RequestMapping("/ajax/login")
+    @PostMapping("/ajax/login")
     @ResponseBody
     public ResultJson ajaxLogin(@Valid UserLogin userReg, BindingResult bindingResult, Model model, HttpServletRequest request, HttpSession session) {
         ResultJson resultJson = new ResultJson();
@@ -138,7 +139,7 @@ public class UserController {
         return resultJson;
     }
 
-    @RequestMapping("/login")
+    @GetMapping("/login")
     public String login(@Valid UserLogin userReg, BindingResult bindingResult, Model model, HttpSession session, HttpServletRequest request,
                         HttpServletResponse response) {
         String from = userReg.getFrom();
@@ -448,7 +449,7 @@ public class UserController {
     }
 
     @ResponseBody
-    @RequestMapping("/code/validate")
+    @GetMapping("/code/validate")
     public Boolean codeValidate(String code, HttpSession session)
     {
         if(code.length()==5 && code.startsWith(","))

@@ -9,24 +9,25 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
-@RestController
+@Controller
 public class LoginController {
 
     @Autowired
     private ILoginService loginService;
 
     //退出的时候是get请求，主要是用于退出
-    @GetMapping(value = "/login")
+  /*  @GetMapping(value = "/login")
     public String login(){
         return "login";
-    }
+    }*/
 
     //post登录
-    @PostMapping(value = "/login")
+    /*@PostMapping(value = "/login")
     public String login(@RequestBody Map map){
         //添加用户认证信息
         Subject subject = SecurityUtils.getSubject();
@@ -36,7 +37,7 @@ public class LoginController {
         //进行验证，这里可以捕获异常，然后返回对应信息
         subject.login(usernamePasswordToken);
         return "login";
-    }
+    }*/
 
     @GetMapping(value = "/index")
     public String index(){

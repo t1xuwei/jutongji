@@ -14,6 +14,7 @@ import java.util.regex.Pattern;
 
 import javax.annotation.Resource;
 
+import com.jutongji.repository.UserMapper;
 import com.jutongji.repository.UserRepository;
 import com.jutongji.exception.ErrorCode;
 import com.jutongji.exception.ServiceException;
@@ -22,6 +23,7 @@ import com.jutongji.service.IUserService;
 import com.jutongji.util.SecureUtil;
 import com.jutongji.util.security.DigestUtils;
 import org.hibernate.HibernateException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
@@ -36,6 +38,9 @@ public class UserServiceImpl implements IUserService<User>
 {
     @Resource
     private UserRepository userRepository;
+
+    @Autowired
+    private UserMapper userMapper;
 
     @Override
     public User insert(User user) throws ServiceException
@@ -58,7 +63,8 @@ public class UserServiceImpl implements IUserService<User>
             user.setVisits(1);
             user.setRegTime(new Date());
 
-            return userRepository.save(user);
+            userMapper.insertUseGeneratedKeys(user);
+            return user;
         }
         catch (HibernateException e)
         {

@@ -2,7 +2,6 @@ package com.jutongji.config.mail;
 
 public class MailCfg
 {
-
     private static final long serialVersionUID = 01L;
 
     public String mailHost;
