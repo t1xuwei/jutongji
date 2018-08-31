@@ -20,8 +20,10 @@ public class User implements Serializable {
     @KeySql(useGeneratedKeys = true)
     @Column(name = "user_id")
     private Integer userId;
-    @Column(name="username")
-    private String username;
+    @Column(name="user_no")
+    private String userNo;
+    @Column(name="user_name")
+    private String userName;
     @Column(name="password")
     private String password;
     @Column(name="email")
@@ -33,7 +35,7 @@ public class User implements Serializable {
     @Column(name="reg_time")
     private Date regTime;
     @Column(name="user_status")
-    private String userStatus;
+    private Integer userStatus;
 
 
     @Transient

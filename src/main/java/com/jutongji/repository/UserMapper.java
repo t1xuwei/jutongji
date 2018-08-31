@@ -13,14 +13,14 @@ import org.apache.ibatis.annotations.Update;
 @Mapper
 public interface UserMapper extends CustomMapper<User>{
 
-    @Select("select * from tb_user where username=#{username}")
+    @Select("select * from tb_user where userName=#{userName}")
     public User findByName(String username);
 
 
-    @Update("update tb_user set password=#{password} where username =#{username} ")
-    public void changePwdByPhone(@Param(value = "username") String phone, @Param(value = "password") String password);
+    @Update("update tb_user set password=#{password} where userName =#{userName} ")
+    public void changePwdByPhone(@Param(value = "userName") String phone, @Param(value = "password") String password);
 
-    @Select("select * from tb_user where username=#{username} and password=#{password}")
-    User searchByUserNameAndPassword(@Param(value = "username") String username, @Param(value = "password") String password);
+    @Select("select * from tb_user where userName=#{userName} and password=#{password}")
+    User searchByUserNameAndPassword(@Param(value = "userName") String username, @Param(value = "password") String password);
 
 }

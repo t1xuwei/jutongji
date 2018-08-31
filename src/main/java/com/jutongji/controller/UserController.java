@@ -1,14 +1,20 @@
 package com.jutongji.controller;
 
+import com.google.code.kaptcha.Constants;
+import com.jutongji.config.mail.MailCfg;
 import com.jutongji.dto.UserLogin;
+import com.jutongji.dto.UserReg;
 import com.jutongji.exception.ServiceException;
+import com.jutongji.mail.BindingMailEntry;
+import com.jutongji.mail.MailSchedulerFactory;
+import com.jutongji.mail.RegistMailEntry;
+import com.jutongji.mail.ResetMailEntry;
 import com.jutongji.model.User;
 import com.jutongji.service.IUserService;
 import com.jutongji.session.UserSession;
 import com.jutongji.session.UserSessionFactory;
-import com.jutongji.util.CookieUtil;
-import com.jutongji.util.RequestUtil;
-import com.jutongji.util.ResultJson;
+import com.jutongji.util.*;
+import com.jutongji.util.str.StringValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -18,14 +24,17 @@ import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.UnsupportedEncodingException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,12 +47,51 @@ import java.util.Map;
 @Controller
 public class UserController {
 
-    private static final String loginView = "login";
+
     @Autowired
     private IUserService userService;
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     protected final static String errorInfo = "errorInfo";
+
+    private static final String registerView = "user/register";
+
+    private static final String successView = "index";
+
+    private static final String registerResult = "user/registerResult";
+
+    private static final String centerView = "user/index";
+
+    private static final String loginView = "login";
+
+    private static final String findPwdView = "user/findPwd";
+
+    private static final String tofindPwdView = "user/password";
+
+    private static final String findPwdInfoView = "user/findInfo";
+
+    private static final String updateInfo = "user/modifyUser";
+
+    private static final String activeFail = "user/activeFail";
+
+    private static final String activeSuccess = "user/active_success";
+
+    private static final String findPwdFail = "user/findPwdFail";
+
+    private static final String bindingSuccess = "user/binding_success";
+
+    private static final String bindingFail = "user/bindingFail";
+
+    private static final String reActive = "user/reActive";
+
+    private static final Integer ACTIVEEMAIL = Integer.valueOf(1);
+
+    private static final Integer RESETEMAIL = Integer.valueOf(2);
+
+    private static final Integer BINGDINGEMAIL = Integer.valueOf(3);
+
+
+    protected final static String addInfo = "addInfo";
 
     @RequestMapping("/ajax/login")
     @ResponseBody
@@ -99,9 +147,6 @@ public class UserController {
         Map<String, String> errors = new HashMap<String, String>();
 
         String toUrl = (String) session.getAttribute("toUrl");
-        if (null != toUrl && toUrl.endsWith(".jsp")) {
-            System.out.println(toUrl);
-        }
         if (!StringUtils.isEmpty(from)) {
             url = "redirect:" + from.replace("#", "");
             isRe = true;
@@ -167,7 +212,7 @@ public class UserController {
             String fromURL = (String) session.getAttribute("fromURL");
             return "redirect:" + fromURL;
         } else {
-            return "redirect:/index.jsp";
+            return "index";
         }
     }
 
@@ -244,6 +289,179 @@ public class UserController {
             return path;
         }
         return null;
+    }
+
+    @GetMapping("/register")
+    public String register(@Valid UserReg userReg, BindingResult bindingResult, Model model, RedirectAttributes attrs, HttpSession session,
+                           RedirectAttributes attr, HttpServletResponse response, HttpServletRequest request)
+    {
+        if (bindingResult.hasErrors())
+        {
+            return error(bindingResult, model, registerView);
+        }
+        User user = new User();
+        try
+        {
+           // 邮箱注册
+            if (session.getAttribute(Constants.KAPTCHA_SESSION_KEY) == null)
+            {
+                model.addAttribute(errorInfo, "验证码错误,请确认您的浏览器已开启Cookie功能！");
+                return registerView;
+            }
+            if (!codeValidate(userReg.getCode(), session))
+            {
+                model.addAttribute(errorInfo, "验证码错误！");
+                return registerView;
+            }
+            user.setEmail(userReg.getUsername());
+            user.setUserStatus(User.USER_STATUS_NEW);
+            user.setUserName(userReg.getUsername());
+            user.setPassword(userReg.getPassword());
+            user.setUserNo(TimeUtil.formatDate(new Date(), TimeUtil.FORMAT_YYYYMMDD) + RandomUtil.genRandomNumberString(6));
+            User oldUser = userService.findUserByName(userReg.getUsername());
+            if (null != oldUser && oldUser.getUserStatus().equals(User.USER_STATUS_NEW))
+            { // 未激活的用户
+                oldUser.setPassword(userReg.getPassword());
+                user = userService.updateUserPassword(oldUser);
+            }
+            else
+            {
+                user = userService.insert(user);
+            }
+            if (!StringValidator.isNumber(userReg.getUsername()))
+            {
+                if (sendEmail(userReg.getUsername(), ACTIVEEMAIL, response, session))
+                {
+                    model.addAttribute(addInfo, "我们已经向您的邮箱" + user.getEmail().split("@")[0]
+                            + "发送了一封激活邮件，请点击邮件中的链接完成注册！"); // TODO
+                    attrs.addFlashAttribute("registerEmail", user.getEmail());
+                };
+            }
+        }
+        catch (ServiceException e)
+        {
+            logger.error(e.getMessage(), e);
+            model.addAttribute("errorinfo", e.getMessage());
+            return error(bindingResult, model, registerView);
+        }
+        catch (Exception e)
+        {
+            logger.error(e.getMessage(), e);
+            model.addAttribute("errorinfo", e.getMessage());
+            return error(bindingResult, model, registerView);
+        }
+        model.addAttribute("from", userReg.getFrom());
+
+        try
+        {
+            if (StringValidator.isNumber(userReg.getUsername()))
+            {
+                UserSession userSession = new UserSession();
+                userSession.setIp(RequestUtil.getRequestIP(request));
+                userService.digestUserName(user);
+                copyProperties(userSession, user);
+                UserSessionFactory.updateUserSession(request.getSession(), userSession);
+                return  successView ;
+            }
+
+        }
+        catch (Exception e)
+        {
+            logger.info("日志生成异常!");
+            e.printStackTrace();
+        }
+        return  registerResult ;
+    }
+
+    public Boolean sendEmail(String account, Integer type, HttpServletResponse response, HttpSession session)
+            throws ServiceException
+    {
+        User user = new User();
+        try
+        {
+            if (account == null || account.equals(""))
+            {
+                return false;
+            }
+            // userNo + userId + date TODO
+            if ( BINGDINGEMAIL.equals(type))
+            {
+                UserSession userSession = UserSessionFactory.getUserSession(session);
+                user = userService.findUserByUserId(userSession.getUserId());
+                user.setEmail(account);
+            }
+            else
+            {
+                user = userService.findUserByName(account);
+                if (null == user)
+                {
+                    return false;
+                }
+            }
+            String date = TimeUtil.formatDate(new Date(), "yyyyMMdd");
+            String hashStr = user.getUserNo() + user.getUserId() + date;
+            String hash = null;
+            try
+            {
+                hash = SecureUtil.md5(SecureUtil.md5(hashStr));
+            } catch (Exception e)
+            {
+                e.printStackTrace();
+                return false;
+            }
+            String receiver = user.getEmail();
+            String url = null;
+            if ( ACTIVEEMAIL.equals(type))
+            {
+                url = MailCfg.getInstance().getRegistUrl() + "=" + hash + "&account=" + receiver;
+                RegistMailEntry entry = new RegistMailEntry(receiver, response.encodeURL(url));
+                logger.info("用户" + user.getEmail() + "开始进入(激活)邮件发送队列!");
+                MailSchedulerFactory.getMailScheduler().putMail(entry);
+            }
+            if (RESETEMAIL.equals(type))
+            {
+                url = MailCfg.getInstance().getResetUrl() + "=" + hash + "&account=" + receiver;
+                ResetMailEntry entry = new ResetMailEntry(receiver, response.encodeURL(url));
+                logger.info("用户" + user.getEmail() + "开始进入(重置密码)邮件发送队列!");
+                MailSchedulerFactory.getMailScheduler().putMail(entry);
+            }
+            if (BINGDINGEMAIL.equals(type))
+            {
+                url = MailCfg.getInstance().getBindingUrl() + "=" + hash + "&account=" + receiver;
+                BindingMailEntry entry = new BindingMailEntry(receiver, response.encodeURL(url));
+                logger.info("用户" + user.getEmail() + "开始进入(绑定邮箱)邮件发送队列!");
+                MailSchedulerFactory.getMailScheduler().putMail(entry);
+            }
+        }
+        catch (Exception e)
+        {
+            throw new ServiceException(0, "发送邮件至" + user.getEmail() + "失败");
+        }
+        return true;
+    }
+    protected void copyProperties(UserSession userSession, User user)
+    {
+        userSession.setEmail(user.getEmail());
+        userSession.setLastLoginTime(user.getLastLogintime());
+        userSession.setUserId(user.getUserId());
+        userSession.setUserName(user.getUserName());
+    }
+
+    @ResponseBody
+    @RequestMapping("/code/validate")
+    public Boolean codeValidate(String code, HttpSession session)
+    {
+        if(code.length()==5 && code.startsWith(","))
+        {
+            code = code.substring(1);
+        }
+
+        String validateCode = session.getAttribute(Constants.KAPTCHA_SESSION_KEY).toString();
+        if (!code.equalsIgnoreCase(validateCode))
+        {
+            return false;
+        }
+        return true;
     }
 
 }

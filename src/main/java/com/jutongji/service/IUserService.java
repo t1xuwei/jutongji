@@ -30,6 +30,9 @@ public interface IUserService<T extends User>
 
     User digestUserName(User user) throws ServiceException;
 
+    User updateUserPassword(User oldUser) throws ServiceException;
+
+    User findUserByUserId(Integer userId) throws ServiceException;
 }
 
 /**

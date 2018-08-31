@@ -51,8 +51,7 @@ public class UserServiceImpl implements IUserService<User>
                 }
             }
             // 密码MD5加密
-            // String originalStr = user.getEmail() + user.getPassword();
-            String originalStr = user.getUsername() + user.getPassword();
+            String originalStr = user.getUserName() + user.getPassword();
             String password = SecureUtil.md5(SecureUtil.md5(originalStr));
             user.setPassword(password);
             user.setLastLogintime(new Timestamp(new Date().getTime()));
@@ -88,7 +87,7 @@ public class UserServiceImpl implements IUserService<User>
             String passWordRecord = record.getPassword();
 
             // 重新计算摘要
-            String originalStr = record.getUsername() + password;
+            String originalStr = record.getUserName() + password;
             String hash = DigestUtils.md5(DigestUtils.md5(originalStr.getBytes("UTF-8")).getBytes("UTF-8"));
             if (!hash.equals(passWordRecord))
             {
@@ -145,6 +144,35 @@ public class UserServiceImpl implements IUserService<User>
     public User digestUserName(User user) throws ServiceException
     {
         return user;
+    }
+
+    @Override
+    public User updateUserPassword(User user) throws ServiceException
+    {
+        try
+        {
+            String originalStr = user.getUserNo() + user.getPassword();
+            String password = SecureUtil.md5(SecureUtil.md5(originalStr));
+            user.setPassword(password);
+            userRepository.save(user);
+            return user;
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            throw new ServiceException(ErrorCode.DB_ERROR, "更新用户[" + user.getUserName() + "]密码失败" + e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public User findUserByUserId(Integer userId) throws ServiceException
+    {
+        if (null == userId)
+        {
+            return null;
+        }
+        Object object = userRepository.findByUserId(userId);
+        return (object == null ? null : (User) object);
     }
 
     // 判断是否电话号码

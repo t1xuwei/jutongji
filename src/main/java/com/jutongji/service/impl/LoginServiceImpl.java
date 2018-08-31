@@ -31,7 +31,7 @@ public class LoginServiceImpl implements ILoginService {
     @Override
     public User addUser(Map<String, Object> map) {
         User user = new User();
-        user.setUsername(map.get("username").toString());
+        user.setUserName(map.get("userName").toString());
         user.setPassword((map.get("password").toString()));
         userMapper.insertUseGeneratedKeys(user);
         return user;
@@ -65,7 +65,7 @@ public class LoginServiceImpl implements ILoginService {
     @Override
     public User findByName(String name) {
         User userParam = new User();
-        userParam.setUsername(name);
+        userParam.setUserName(name);
         List<User> users = userMapper.select(userParam);
         if(CollectionUtils.isEmpty(users))
             return null;

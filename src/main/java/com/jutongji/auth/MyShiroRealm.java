@@ -1,5 +1,6 @@
 package com.jutongji.auth;
 
+import com.jutongji.exception.loginException.UserNotFoundException;
 import com.jutongji.model.Permission;
 import com.jutongji.model.User;
 import com.jutongji.model.UserRole;
@@ -32,7 +33,7 @@ public class MyShiroRealm extends AuthorizingRealm {
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         //获取登录用户名
         String name= (String) principalCollection.getPrimaryPrincipal();
-        //查询用户名称
+        //根据用户名称查询出所有的权限了。
         User user = loginService.findByName(name);
         //添加角色和权限
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
@@ -59,7 +60,7 @@ public class MyShiroRealm extends AuthorizingRealm {
         User user = loginService.findByName(name);
         if (user == null) {
             //这里返回后会报出对应异常
-            return null;
+            throw new UserNotFoundException();
         } else {
             //这里验证authenticationToken和simpleAuthenticationInfo的信息
             SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(name, user.getPassword().toString(), getName());

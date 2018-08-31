@@ -16,17 +16,17 @@
 
 <div class="container">
 
-	<input type="hidden" id="demoCount" value="${demoCount}">
+	<input type="hidden" id="demoCount" th:attr="value=${demoCount}">
 	<input type="hidden" id="currentId" value="-1">
 	<p><a class="btn btn-primary btn-lg" id="randomSelectButton" href="javascript:void(0);" role="button">戳这里</a></p>
 	<ul class="list-group">
 		<tr th:each ="demoObj,demoObjState:${demos}" >
-			<li class="list-group-item list-group-item-info" id="demotitle${status.index+1}"><td th:text="${demoObjState.index+1} + . + ${demoObj.title}"></td></li>
+			<li class="list-group-item list-group-item-info" th:attr="id=demotitle+${demoObjState.index+1}"><td th:text="${demoObjState.index+1} + . + ${demoObj.title}"></td></li>
 		</tr>
 	</ul>
 </div>
 
-<script type="text/javascript" src="/static/js/jquery-3.2.1.js"></script>
+<script type="text/javascript" th:src="@{/static/js/jquery-3.2.1.js}"></script>
 <script type="text/javascript">
     $(function(){
         Demo = function(){
@@ -40,6 +40,7 @@
             // 绑定随机选择题目的事件
             bindRandomSelectEvent:function(){
                 $("#randomSelectButton").on("click",function(){
+					console.log("hello");
                     //清空之前选择的
                     $(".list-group-item.list-group-item-danger").attr("class", "list-group-item list-group-item-info");
                     var total = parseInt($("#demoCount").val());

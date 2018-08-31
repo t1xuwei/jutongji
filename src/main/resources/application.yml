@@ -7,7 +7,7 @@ spring:
       name: ts
       url: jdbc:mysql://115.159.149.177:3306/jutongji?useUnicode=true&autoReconnect=true&rewriteBatchedStatements=TRUE
       username: xuw
-      password:
+      password: xuw@123
       type: com.alibaba.druid.pool.DruidDataSource
       driver-class-name: com.mysql.jdbc.Driver
       filters: wall,stat
