@@ -33,6 +33,8 @@ public interface IUserService<T extends User>
     User updateUserPassword(User oldUser) throws ServiceException;
 
     User findUserByUserId(Integer userId) throws ServiceException;
+
+    User update(User user);
 }
 
 /**

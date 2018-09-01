@@ -1,6 +1,7 @@
 package com.jutongji.mail;
 
 import com.jutongji.config.mail.MailCfg;
+import org.springframework.util.ResourceUtils;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -83,7 +84,7 @@ public class MailTemplateFactory
             try
             {
                 String tplPath = MailCfg.getInstance().getRegistTemplateFile();
-                FileInputStream fin = new FileInputStream(new File(tplPath));
+                FileInputStream fin = new FileInputStream(ResourceUtils.getFile(String.format("classpath:%s",tplPath)));//new FileInputStream(new File(tplPath));
                 BufferedReader in = new BufferedReader(new InputStreamReader(fin, "UTF-8"));
                 String s;
                 registMailTpl = "";

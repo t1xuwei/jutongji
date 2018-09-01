@@ -8,6 +8,10 @@
  */
 package com.jutongji.mail.mailUtil;
 
+import com.jutongji.config.mail.MailCfg;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import java.util.Map;
 
 /**
@@ -20,7 +24,7 @@ import java.util.Map;
 public abstract class MailEntry implements IMailEntry
 {
     int retryLimit = 1;
-    
+
     public Map<String, String> getAttachments() 
     {
         return null;

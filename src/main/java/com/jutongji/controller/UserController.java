@@ -14,6 +14,7 @@ import com.jutongji.service.IUserService;
 import com.jutongji.session.UserSession;
 import com.jutongji.session.UserSessionFactory;
 import com.jutongji.util.*;
+import com.jutongji.util.security.DigestUtils;
 import com.jutongji.util.str.StringValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,10 +25,7 @@ import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
@@ -46,6 +44,7 @@ import java.util.Map;
  * @Date: 2018/8/23 14:33
  */
 @Controller
+@RequestMapping("user")
 public class UserController {
 
 
@@ -372,6 +371,78 @@ public class UserController {
             e.printStackTrace();
         }
         return  registerResult ;
+    }
+
+    /**
+     * activate：邮件激活
+     *
+     * @param acode
+     *            激活码
+     * @param account
+     *            账户
+     * @param model
+     * @return
+     * @see <参见的内容>
+     */
+    @RequestMapping(value = "/activate", method = RequestMethod.GET)
+    public String activate(@RequestParam
+                                   String acode, @RequestParam
+                                   String account, Model model, HttpServletRequest request, HttpServletResponse response)
+    {
+        if (StringUtils.isEmpty(acode) || StringUtils.isEmpty(account))
+        {
+            model.addAttribute(errorInfo, "请求参数有误,激活失败!");
+            return activeFail;
+        }
+        try
+        {
+            User user = userService.findUserByName(account);
+            if (null == user)
+            {
+                logger.error("未查询到改用户,激活失败");
+                model.addAttribute(errorInfo, "请求数据有误,激活失败");
+                return activeFail;
+            }
+            if (User.USER_STATUS_INACTIVE.equals(user.getUserStatus()))
+            {
+                model.addAttribute(errorInfo, User.USER_STATUS_INACTIVE_NAME);
+                logger.error("改用户已被禁用,激活失败");
+                return activeFail;
+            }
+            if (User.USER_STATUS_ACTIVE.equals(user.getUserStatus()))
+            {
+                model.addAttribute(errorInfo, "该用户已经激活,^_^");
+                return activeFail;
+            }
+            String date = TimeUtil.formatDate(new Date(), "yyyyMMdd");
+            String hashStr = user.getUserNo() + user.getUserId() + date;
+            String hash = DigestUtils.md5(DigestUtils.md5(hashStr.getBytes("UTF-8")).getBytes("UTF-8"));
+            if (!acode.equals(hash))
+            {
+                model.addAttribute(errorInfo, "激活链接已过期,请重新激活!");
+                model.addAttribute("activeUser", user); // 用于重新发送激活邮件
+                logger.error("激活链接过期或参数错误!");
+                return reActive;
+            }
+            user.setUserStatus(User.USER_STATUS_ACTIVE);
+            userService.update(user);
+            setUserSession(user, model, request);
+            model.addAttribute("activeInfo", "恭喜您成功激活该账户!");
+            return activeSuccess;
+        }
+        catch (ServiceException e)
+        {
+            model.addAttribute(errorInfo, "请求数据有误,激活失败");
+            logger.error("请求参数有误,激活失败!", e);
+            e.printStackTrace();
+            return activeFail;
+        }
+        catch (Exception e)
+        {
+            logger.error("系统异常!", e);
+            e.printStackTrace();
+            return activeFail;
+        }
     }
 
     public Boolean sendEmail(String account, Integer type, HttpServletResponse response, HttpSession session)

@@ -181,6 +181,12 @@ public class UserServiceImpl implements IUserService<User>
         return (object == null ? null : (User) object);
     }
 
+    @Override
+    public User update(User user) {
+        userMapper.updateByPrimaryKey(user);
+        return user;
+    }
+
     // 判断是否电话号码
     private boolean isPhoneNumber(String input) throws ServiceException
     {

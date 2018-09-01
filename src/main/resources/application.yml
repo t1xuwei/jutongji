@@ -52,6 +52,18 @@ logging:
     pattern:
       console: "%d{yyyy-MM-dd HH:mm:ss:SSS}  [%thread] %-5level %logger{36}.%M [%L] - [%X{TRACE_ID}] %msg%n"
       file: "%d{yyyy-MM-dd HH:mm:ss:SSS} [%thread] %-5level %logger{36} - [%X{TRACE_ID}] %msg%n"
+
+jutongji:
+  mail:
+    mailHost: smtp.163.com
+    mailSender: t1xuwei@163.com
+    mailSenderPassword: xu080499
+    mailFrom: t1xuwei@163.com
+    mailName: jutongji
+    templateTitle: 聚统计
+    registTemplateFile: mail/registmail.tpl
+    registUrl: http://localhost:90/user/activate?acode
+
 #thymelea模板配置
 
 #mapper:
