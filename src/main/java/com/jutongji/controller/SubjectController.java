@@ -1,10 +1,20 @@
 package com.jutongji.controller;
 
+import com.jutongji.model.Subject;
+import com.jutongji.model.SubjectRecord;
+import com.jutongji.service.ISubjectService;
+import com.jutongji.session.UserSession;
+import com.jutongji.session.UserSessionFactory;
 import com.jutongji.util.Data;
 import io.swagger.annotations.ApiOperation;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * @author: xuw
@@ -14,40 +24,78 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class SubjectController {
 
+    @Autowired
+    private ISubjectService subjectService;
+
+    @ApiOperation("添加主题页面")
+    @GetMapping("/subject/view")
+    public String addSubjectView(){
+        return "subject/addSubject";
+    }
+
     @ApiOperation("添加主题")
-    @PostMapping("/subject/add")
-    public Data<?> addSubject(){
-        return Data.success();
+    @GetMapping("/subject/add")
+    public Data<?> addSubject(@RequestBody Subject subject, HttpSession session){
+        UserSession userSession = UserSessionFactory.getUserSession(session);
+        if(null == userSession){
+            return Data.failure("用户未登录。");
+        }
+        subject.setCreatedBy(userSession.getUserId());
+        return subjectService.save(subject);
     }
 
     @ApiOperation("删除主题")
-    @GetMapping("/subject/del")
-    public Data<?> delSubject(){
-        return Data.success();
+    @GetMapping("/subject/{id}/del")
+    public Data<?> delSubject(@PathVariable("id")Integer id, HttpSession session){
+        UserSession userSession = UserSessionFactory.getUserSession(session);
+        if(null == userSession){
+            return Data.failure("用户未登录。");
+        }
+        return subjectService.delSubjectById(userSession.getUserId(), id);
     }
 
     @ApiOperation("查看主题记录")
-    @PostMapping("/subject/list")
-    public Data<?> subjectList(){
-        return Data.success();
+    @GetMapping("/subject/listView")
+    public String subjectList(HttpSession session, Model model){
+        UserSession userSession = UserSessionFactory.getUserSession(session);
+        if(null == userSession){
+            return "login";
+        }
+        List<Subject> subjectList =  subjectService.selectByUserId(userSession.getUserId()).getData();
+        model.addAttribute("list", subjectList);
+        return "subject/list";
     }
 
     @ApiOperation("添加主题的记录")
     @PostMapping("/record/add")
-    public Data<?> addSubjectRecord(){
-        return Data.success();
+    public Data<?> addSubjectRecord(@RequestBody SubjectRecord subjectRecord, HttpSession session){
+        UserSession userSession = UserSessionFactory.getUserSession(session);
+        if(null == userSession){
+            return Data.failure("用户未登录");
+        }
+        subjectRecord.setCreatedById(userSession.getUserId());
+        return subjectService.saveRecord(subjectRecord);
     }
 
     @ApiOperation("删除记录")
-    @GetMapping("/record/del")
-    public Data<?> delRecord(){
+    @GetMapping("/record/{id}/del")
+    public Data<?> delRecord(@PathVariable("id") Integer id, HttpSession session){
+        UserSession userSession = UserSessionFactory.getUserSession(session);
+        if(null == userSession){
+            return Data.failure("用户未登录");
+        }
         return Data.success();
     }
 
     @ApiOperation("根据时间查询记录")
-    @GetMapping("/record/list")
-    public Data<?> recordList(){
-        return Data.success();
+    @GetMapping("/subject/{id}/records/")
+    public String recordList(@PathVariable("id") Integer subjectId, HttpSession session, Model model){
+        UserSession userSession = UserSessionFactory.getUserSession(session);
+        if(null == userSession){
+            return "login";
+        }
+        model.addAttribute("resultList",subjectService.selectRecordsById(subjectId, userSession.getUserId()).getData());
+        return "subject/record/list";
     }
 
 

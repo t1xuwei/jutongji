@@ -39,11 +39,6 @@ public class LoginController {
         return "login";
     }*/
 
-    @GetMapping(value = "/index")
-    public String index(){
-        return "index";
-    }
-
     //登出
     @GetMapping(value = "/logout")
     public String logout(){

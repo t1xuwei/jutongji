@@ -5,7 +5,7 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="subject_name" jdbcType="VARCHAR" property="subjectName" />
     <result column="subject_desc" jdbcType="VARCHAR" property="subjectDesc" />
-    <result column="created_by" jdbcType="VARCHAR" property="createdBy" />
+    <result column="created_by" jdbcType="INTEGER" property="createdBy" />
     <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
     <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
   </resultMap>

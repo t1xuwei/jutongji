@@ -93,6 +93,7 @@ public class UserController {
 
     protected final static String addInfo = "addInfo";
 
+
     @PostMapping("/ajax/login")
     @ResponseBody
     public ResultJson ajaxLogin(@Valid UserLogin userReg, BindingResult bindingResult, Model model, HttpServletRequest request, HttpSession session) {
