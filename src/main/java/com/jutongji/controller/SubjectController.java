@@ -28,9 +28,9 @@ public class SubjectController {
     private ISubjectService subjectService;
 
     @ApiOperation("添加主题页面")
-    @GetMapping("/subject/view")
+    @GetMapping("/subject/addView")
     public String addSubjectView(){
-        return "subject/addSubject";
+        return "subject/add_subject";
     }
 
     @ApiOperation("添加主题")

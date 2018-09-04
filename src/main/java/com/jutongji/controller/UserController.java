@@ -58,7 +58,7 @@ public class UserController {
 
     private static final String successView = "index";
 
-    private static final String registerResult = "user/registerResult";
+    private static final String registerResult = "user/register_result";
 
     private static final String centerView = "user/index";
 
