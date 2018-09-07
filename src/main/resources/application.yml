@@ -63,7 +63,8 @@ jutongji:
     templateTitle: 聚统计
     registTemplateFile: mail/registmail.tpl
     registUrl: http://localhost:90/user/activate?acode
-
+  path:
+   websitePath: http://localhost:90/
 #thymelea模板配置
 
 #mapper:

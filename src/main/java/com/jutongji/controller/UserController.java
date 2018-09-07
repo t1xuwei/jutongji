@@ -1,6 +1,7 @@
 package com.jutongji.controller;
 
 import com.google.code.kaptcha.Constants;
+import com.jutongji.config.PathConfig;
 import com.jutongji.config.mail.MailCfg;
 import com.jutongji.dto.UserLogin;
 import com.jutongji.dto.UserReg;
@@ -50,6 +51,9 @@ public class UserController {
 
     @Autowired
     private IUserService userService;
+
+    @Autowired
+    private PathConfig pathConfig;
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     protected final static String errorInfo = "errorInfo";
@@ -213,8 +217,13 @@ public class UserController {
             String fromURL = (String) session.getAttribute("fromURL");
             return "redirect:" + fromURL;
         } else {
-            return "index";
+            return String.format("redirect:%ssubject/listView", pathConfig.getWebsitePath());
         }
+    }
+
+    @GetMapping("/toLogin")
+    public String loginView(){
+        return "login";
     }
 
     public String redirectError(BindingResult bindingResult, Map<String, String> model, String path)

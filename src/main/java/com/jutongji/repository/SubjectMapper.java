@@ -20,5 +20,5 @@ public interface SubjectMapper extends CustomMapper<Subject>{
     void updateDeletedById(@Param("deleted")Integer deleted, @Param("id") Integer id);
 
     @Select("select * from t_subject where created_by=#{createdBy} and deleted=#{deleted}")
-    List<Subject> selectByCreatedByAndDeletedFalse(Integer userId, Integer notDelted);
+    List<Subject> selectByCreatedByAndDeletedFalse(@Param("createdBy") Integer userId, @Param("deleted")Integer notDelted);
 }

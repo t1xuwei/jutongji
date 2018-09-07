@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -34,13 +35,16 @@ public class SubjectController {
     }
 
     @ApiOperation("添加主题")
-    @GetMapping("/subject/add")
+    @ResponseBody
+    @PostMapping("/subject/add")
     public Data<?> addSubject(@RequestBody Subject subject, HttpSession session){
         UserSession userSession = UserSessionFactory.getUserSession(session);
         if(null == userSession){
             return Data.failure("用户未登录。");
         }
         subject.setCreatedBy(userSession.getUserId());
+        subject.setCreatedAt(new Date());
+        subject.setUpdatedAt(new Date());
         return subjectService.save(subject);
     }
 
