@@ -146,6 +146,12 @@ public class UserController {
     @GetMapping("/login")
     public String login(@Valid UserLogin userReg, BindingResult bindingResult, Model model, HttpSession session, HttpServletRequest request,
                         HttpServletResponse response) {
+        if(userReg == null || org.apache.commons.lang3.StringUtils.isBlank(userReg.getName())){
+            if (null != CookieUtil.getCookieByName(request,"autoUserName"))
+                userReg.setName( CookieUtil.getCookieByName(request,"autoUserName").getValue());
+            if(null != CookieUtil.getCookieByName(request,"autoPassword"))
+                userReg.setPassword(CookieUtil.getCookieByName(request,"autoPassword").getValue());
+        }
         String from = userReg.getFrom();
         boolean isRe = false;
         String url = loginView;
