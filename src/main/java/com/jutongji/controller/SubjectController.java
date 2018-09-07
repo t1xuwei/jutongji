@@ -92,13 +92,15 @@ public class SubjectController {
     }
 
     @ApiOperation("根据时间查询记录")
-    @GetMapping("/subject/{id}/records/")
-    public String recordList(@PathVariable("id") Integer subjectId, HttpSession session, Model model){
+    @GetMapping("/subject/{id}/records")
+    public String recordList(@PathVariable(name = "id") Integer subjectId, HttpSession session, Model model){
         UserSession userSession = UserSessionFactory.getUserSession(session);
         if(null == userSession){
             return "login";
         }
-        model.addAttribute("resultList",subjectService.selectRecordsById(subjectId, userSession.getUserId()).getData());
+        List<SubjectRecord> records = (List<SubjectRecord>) subjectService.selectRecordsById(subjectId, userSession.getUserId()).getData();
+        model.addAttribute("resultList",records);
+        model.addAttribute("totalCount",records.size());
         return "subject/record/list";
     }
 

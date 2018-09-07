@@ -8,14 +8,14 @@
     <meta http-equiv="expires" content="0" />
     <meta http-equiv="keywords" content="统计,健康" />
     <meta http-equiv="description" content="仅供日常娱乐使用" />
-    <link th:href="@{../static/bootstrap/css/bootstrap.css}" rel="stylesheet" type="text/css"/>
-    <link th:href="@{../static/css/H-ui.login.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/static/bootstrap/css/bootstrap.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/static/css/H-ui.login.css}" rel="stylesheet" type="text/css"/>
 
 </head>
 <body >
 <h5>登录页面login.html</h5>
 <div id="loginform" class="loginBox">
-    <form class="form form-horizontal" action="http://localhost:90/user/login" method="get">
+    <form class="form form-horizontal" th:attr="action=${@pathConfig.getWebsitePath()}+'user/login'" method="get">
         <div class="row cl">
             <label class="form-label col-xs-3"><i class="Hui-iconfont">&#xe60d;</i></label>
             <div class="formControls col-xs-8">
@@ -31,7 +31,7 @@
         <div class="row cl">
             <div class="formControls col-xs-8 col-xs-offset-3">
                 <input class="input-text size-L" type="text" placeholder="验证码" onblur="if(this.value==''){this.value='验证码:'}" onclick="if(this.value=='验证码:'){this.value='';}" value="验证码:" style="width:150px;">
-                <img src="http://localhost:90/kaptcha/code">
+                <img th:attr="src=${@pathConfig.getWebsitePath()}+'kaptcha/code'">
                 <a id="kanbuq" href="javascript:;">看不清，换一张</a>
             </div>
         </div>

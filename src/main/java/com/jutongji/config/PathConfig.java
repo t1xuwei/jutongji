@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(
         prefix = "jutongji.path"
 )
+
 public class PathConfig {
     private String websitePath;
 

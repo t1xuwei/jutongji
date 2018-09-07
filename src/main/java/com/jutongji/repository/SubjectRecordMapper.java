@@ -12,5 +12,5 @@ import java.util.List;
 public interface SubjectRecordMapper extends CustomMapper<SubjectRecord>{
 
     @Select("select * from t_subject_record where subject_id=#{subjectId} and deleted=#{deleted}")
-    List<SubjectRecordMapper> selectBySubjectIdAndDeltedFalse(@Param("subjectId") Integer subjectId, @Param("deleted")Integer deleted);
+    List<SubjectRecord> selectBySubjectIdAndDeltedFalse(@Param("subjectId") Integer subjectId, @Param("deleted")Integer deleted);
 }

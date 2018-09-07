@@ -27,7 +27,7 @@ public class SubjectRecord {
     @Column(name = "deleted")
     private Integer deleted;
 
-    @Column(name = "creatd_by_id")
+    @Column(name = "created_by_id")
     private Integer createdById;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")

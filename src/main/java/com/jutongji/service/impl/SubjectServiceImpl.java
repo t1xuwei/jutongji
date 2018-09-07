@@ -60,11 +60,11 @@ public class SubjectServiceImpl implements ISubjectService{
 
     @Override
     public Data<?> selectRecordsById(Integer subjectId, Integer userId) {
-        SubjectRecord subjectRecord = subjectRecordMapper.selectByPrimaryKey(subjectId);
-        if(subjectRecord == null || !userId.equals(subjectRecord.getCreatedById())){
+        Subject subject = subjectMapper.selectByPrimaryKey(subjectId);
+        if(subject == null || !userId.equals(subject.getCreatedBy())){
             return Data.failure("没有权限！");
         }
-        List<SubjectRecordMapper> subjectRecords = subjectRecordMapper.selectBySubjectIdAndDeltedFalse(subjectId, CommonConstants.NOT_DELTED);
+        List<SubjectRecord> subjectRecords = subjectRecordMapper.selectBySubjectIdAndDeltedFalse(subjectId, CommonConstants.NOT_DELTED);
         return Data.success(subjectRecords);
     }
 

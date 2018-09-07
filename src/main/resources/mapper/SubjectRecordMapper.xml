@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.jutongji.dao.SubjectRecordMapper">
+<mapper namespace="com.jutongji.repository.SubjectRecordMapper">
   <resultMap id="BaseResultMap" type="com.jutongji.model.SubjectRecord">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="subject_id" jdbcType="INTEGER" property="subjectId" />

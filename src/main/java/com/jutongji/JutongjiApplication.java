@@ -18,5 +18,6 @@ public class JutongjiApplication {
 	public static void main(String[] args) {
 		System.out.println("start==========================");
 		SpringApplication.run(JutongjiApplication.class, args);
+
 	}
 }

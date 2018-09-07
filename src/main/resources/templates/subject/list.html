@@ -25,10 +25,10 @@
     </p>
     <ul class="list-group">
         <tr th:each="subject,subjectState:${list}">
-            <li class="list-group-item list-group-item-info"
+            <a th:attr="href=${@pathConfig.getWebsitePath()} + 'subject/' + ${subject.id} + '/records'"><li class="list-group-item list-group-item-info"
                 th:attr="id=subject_title+${subjectState.index+1},title=${subject.subjectDesc}">
                 <td th:text="${subjectState.index+1} + . + ${subject.subjectName}"></td>
-            </li>
+            </li></a>
         </tr>
     </ul>
 
