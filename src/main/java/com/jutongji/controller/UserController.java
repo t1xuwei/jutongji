@@ -34,6 +34,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -143,12 +144,12 @@ public class UserController {
         return resultJson;
     }
 
-    @GetMapping("/login")
+    @RequestMapping("/login")
     public String login(@Valid UserLogin userReg, BindingResult bindingResult, Model model, HttpSession session, HttpServletRequest request,
-                        HttpServletResponse response) {
+                        HttpServletResponse response) throws UnsupportedEncodingException {
         if(userReg == null || org.apache.commons.lang3.StringUtils.isBlank(userReg.getName())){
             if (null != CookieUtil.getCookieByName(request,"autoUserName"))
-                userReg.setName( CookieUtil.getCookieByName(request,"autoUserName").getValue());
+                userReg.setName(URLDecoder.decode(CookieUtil.getCookieByName(request,"autoUserName").getValue(),"UTF-8"));
             if(null != CookieUtil.getCookieByName(request,"autoPassword"))
                 userReg.setPassword(CookieUtil.getCookieByName(request,"autoPassword").getValue());
         }

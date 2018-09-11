@@ -3,6 +3,7 @@ package com.jutongji.service;
 import com.jutongji.model.Subject;
 import com.jutongji.model.SubjectRecord;
 import com.jutongji.util.Data;
+import com.jutongji.vo.RecordQueryParam;
 
 import java.util.List;
 
@@ -21,4 +22,8 @@ public interface ISubjectService {
     Data<?> saveRecord(SubjectRecord subjectRecord);
 
     Data<?> selectRecordsById(Integer subjectId, Integer userId);
+
+    Subject selectByPrimaryKey(Integer subjectId);
+
+    List<SubjectRecord> selectRecordsBySubjectIdAndUserIdAndTime(RecordQueryParam recordQueryParam, Integer userId);
 }

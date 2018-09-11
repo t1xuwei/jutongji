@@ -2,20 +2,145 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>聚统计</title>
-    <meta http-equiv="pragma" content="no-cache" />
-    <meta http-equiv="cache-control" content="no-cache" />
-    <meta http-equiv="expires" content="0" />
-    <meta http-equiv="keywords" content="统计,健康" />
-    <meta http-equiv="description" content="仅供日常娱乐使用" />
+    <title>日常小程序</title>
+    <meta http-equiv="pragma" content="no-cache"/>
+    <meta http-equiv="cache-control" content="no-cache"/>
+    <meta http-equiv="expires" content="0"/>
+    <meta http-equiv="keywords" content="企业信用,企业查询,工商信息,企业工商,工商查询,企业信用查询,企业工商信息查询"/>
+    <meta http-equiv="description" content="仅供聚统计使用"/>
     <link th:href="@{/static/bootstrap/css/bootstrap.css}" rel="stylesheet" type="text/css"/>
-
+    <link th:href="@{/static/js/simple-calendar/simple-calendar.css}" rel="stylesheet" type="text/css"/>
 
 </head>
-<body >
-<h5 >记录列表页面</h5>
-<span th:attr="text='记录总条数：'+${totalCount} "></span>
+<body>
 
+<div class="container">
+
+    <input type="hidden" id ="websiteUrl" th:attr="value=${@pathConfig.getWebsitePath()}"/>
+    <input type="hidden" id ="subjectId" th:attr="value=${subjectId}"/>
+    <input type="hidden" id="currentId" value="-1">
+    <p>
+        <button type="button" id="addRecord" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+            新建记录
+        </button>
+    </p>
+    <div id='calendar-container'></div>
+
+
+
+</div>
+
+<script type="text/javascript" th:src="@{/static/js/jquery-3.2.1.js}"></script>
+<script type="text/javascript" th:src="@{/static/bootstrap/js/bootstrap.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/simple-calendar/simple-calendar.js}"></script>
+<script type="text/javascript">
+    $(function () {
+        var options = {
+            width: '500px',
+            height: '500px',
+            language: 'CH', //语言
+            showLunarCalendar: false, //阴历
+            showHoliday: true, //休假
+            showFestival: true, //节日
+            showLunarFestival: true, //农历节日
+            showSolarTerm: true, //节气
+            showMark: true, //标记
+            timeRange: {
+                startYear: 1900,
+                endYear: 2049
+            },
+            mark: {
+                '2018-9-11': '上学',
+                '2018-9-9':'暑假作业'
+            },
+            theme: {
+                changeAble: false,
+                weeks: {
+                    backgroundColor: '#FBEC9C',
+                    fontColor: '#4A4A4A',
+                    fontSize: '20px',
+                },
+                days: {
+                    backgroundColor: '#ffffff',
+                    fontColor: '#565555',
+                    fontSize: '24px'
+                },
+                todaycolor: 'white',
+                activeSelectColor: 'orange',
+            }
+        };
+        var myCalendar = new SimpleCalendar('#calendar-container', options);
+
+        Demo = function () {
+
+        };
+        Demo.prototype = {
+            init: function () {
+                this.updateCalendar();
+                this.bindEvent(this.updateCalendar);
+            },
+            // 绑定随机选择题目的事件
+            bindEvent: function (updateCalendarFunc) {
+                $("#addRecord").on("click", function (updateCalendarFunc) {
+                    var param = {}
+                    param['subjectId'] = $("#subjectId").val();
+                    $.ajax({
+                        type: 'POST',
+                        url: $("#websiteUrl").val() + "record/add",
+                        contentType: "application/json",
+                        data: JSON.stringify(param),
+                        success: function(data){
+                            if(data.code != 0){
+                                alert(data.message);
+                                return;
+                            }
+                            updateCalendarFunc();
+                            alert("签到成功!");
+                        },
+                        dataType: "json"
+                    });
+                });
+                $(".sc-select-year,.sc-select-month").change(function(updateCalendarFunc){
+                    console.log(myCalendar)
+                    console.log();
+                    //console.log($(this).find("option:selected").text());
+                    updateCalendarFunc();
+                });
+
+            },
+            updateCalendar: function() {
+                var param = {}
+                param['month'] = $(".sc-select-month:first").find("option:selected").text();
+                param['year'] = $(".sc-select-year:first").find("option:selected").text();
+                param['subjectId'] = $("#subjectId").val();
+                console.log("change");
+                console.log(param);
+                $.ajax({
+                    type: 'POST',
+                    url: $("#websiteUrl").val() + "subject/records",
+                    contentType: "application/json",
+                    data: JSON.stringify(param),
+                    success: function(data){
+                        if(data.code === 1){
+                            alert(data.message);
+                            return;
+                        }
+                        var markList = data.data;
+                        for (var i=0;i<markList.length;i++)
+                        {
+                            myCalendar.addMark(markList[i].createdAt, markList[i].desc);
+                        }
+                    },
+                    dataType: "json"
+                });
+            }
+
+        };
+        var demo = new Demo();
+        demo.init();
+    }())
+
+</script>
 
 </body>
 </html>

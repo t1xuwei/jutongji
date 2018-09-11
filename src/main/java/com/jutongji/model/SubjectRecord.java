@@ -12,32 +12,32 @@ import javax.persistence.Table;
 import java.util.Date;
 @Data
 @Entity
-@Table(name = "t_subject")
+@Table(name = "t_subject_record")
 public class SubjectRecord {
     @Id
     @KeySql(useGeneratedKeys = true)
-    @Column(name = "id")
+    @Column(name = "`id`")
     private Integer id;
-    @Column(name = "subject_id")
+    @Column(name = "`subject_id`")
     private Integer subjectId;
 
-    @Column(name = "desc")
+    @Column(name = "`desc`")
     private String desc;
 
-    @Column(name = "deleted")
+    @Column(name = "`deleted`")
     private Integer deleted;
 
-    @Column(name = "created_by_id")
+    @Column(name = "`created_by_id`")
     private Integer createdById;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
-    @Column(name = "created_at")
+    @Column(name = "`created_at`")
     private Date createdAt;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
-    @Column(name = "updated_at")
+    @Column(name = "`updated_at`")
     private Date updatedAt;
 
 

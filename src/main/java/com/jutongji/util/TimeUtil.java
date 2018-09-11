@@ -13,10 +13,11 @@ import java.util.Locale;
  * @date 2018/3/21 17:26
  */
 public class TimeUtil {
-    private static final String DAY_BEGIN = "yyyy-MM-dd 00:00:00";
-    private static final String DAY_END = "yyyy-MM-dd 23:59:59";
+    public static final String DAY_BEGIN = "yyyy-MM-dd 00:00:00";
+    public static final String DAY_END = "yyyy-MM-dd 23:59:59";
 
-    private static final String NORMAL_PATTERN = "yyyy-MM-dd HH:mm:ss";
+    public static final String NORMAL_PATTERN = "yyyy-MM-dd HH:mm:ss";
+    public static final String SINGLE_MONTH = "yyyy-M-d";
     public static final String FORMAT_YYYYMMDD = "yyyyMMdd";
     /**
      * 返回当日0点
@@ -41,12 +42,14 @@ public class TimeUtil {
     }
 
     public static void main(String[] args) throws ParseException {
+        SimpleDateFormat sdf1 = new SimpleDateFormat( NORMAL_PATTERN);
+        SimpleDateFormat sdf2 = new SimpleDateFormat( NORMAL_PATTERN);
+        System.out.println(formatDate(sdf1.parse("2018-12-10 03:20:00"), "yyyy-M-dd"));
         System.out.println(getDayBegin(new Date()));
         System.out.println(getDayEnd(new Date()));
         System.out.println(formatNormalDate(new Date()));
 
-        SimpleDateFormat sdf1 = new SimpleDateFormat( NORMAL_PATTERN);
-        SimpleDateFormat sdf2 = new SimpleDateFormat( NORMAL_PATTERN);
+
         System.out.println(checkTimeEquals(sdf1.parse("2018-07-10 03:20:00"),sdf2.parse("2018-07-10 03:20:00")));
     }
 
@@ -100,6 +103,24 @@ public class TimeUtil {
             return true;
         }
         return false;
+    }
+
+    /**
+     * 返回时间所属月最初的时间
+     * @param paramTime
+     * @return
+     */
+    public static Date getMonthEnd(Date paramTime){
+        return new DateTime(paramTime).dayOfMonth().withMaximumValue().withMillisOfDay(DateTimeConstants.MILLIS_PER_DAY - 1).toDate();
+    }
+
+    /**
+     * 返回时间所属月最终的时间
+     * @param paramTime
+     * @return
+     */
+    public static Date getMonthBegin(Date paramTime){
+        return new DateTime(paramTime).dayOfMonth().withMinimumValue().withMillisOfDay(0).toDate();
     }
 
 }

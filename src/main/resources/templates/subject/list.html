@@ -16,8 +16,7 @@
 
 <div class="container">
 
-
-    <input type="hidden" id="currentId" value="-1">
+    <input type="hidden" id ="websiteUrl" th:attr="value=${@pathConfig.getWebsitePath()}"/>
     <p>
         <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
             新建主题
@@ -42,21 +41,21 @@
                     <h4 class="modal-title" id="myModalLabel">Modal title</h4>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form th:attr="action=${@pathConfig.getWebsitePath()}+'subject/add'" id="addForm" method="post">
                         <div class="form-group">
-                            <label for="exampleInputEmail1">主题名称</label>
-                            <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Email">
+                            <label for="subjectName">主题名称</label>
+                            <input type="text" class="form-control" id="subjectName" name="subjectName" placeholder="">
                         </div>
                         <div class="form-group">
                             <label for="subjectDesc">主题简介</label>
-                            <input type="text" class="form-control" name="subjectDesc" id="subjectDesc" placeholder="subjectDesc">
+                            <input type="text" class="form-control" name="subjectDesc" id="subjectDesc" placeholder="">
                         </div>
-                        <button type="submit" class="btn btn-default">Submit</button>
+                        <button type="button" id="newSubjectButton" class="btn btn-default">提交</button>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <!--<button type="button" class="btn btn-primary">Save changes</button>-->
                 </div>
             </div>
         </div>
@@ -79,7 +78,21 @@
             // 绑定随机选择题目的事件
             bindRandomSelectEvent: function () {
                 $("#newSubjectButton").on("click", function () {
-
+                    console.log($("#addForm").serialize());
+                    $.ajax({
+                        type: 'POST',
+                        url: $("#websiteUrl").val() + "subject/add",
+                        // contentType: "application/json",
+                        data: $("#addForm").serialize(),
+                        success: function(data){
+                            if(data.code != 0){
+                                alert(data.message);
+                                return;
+                            }
+                            window.location.reload()
+                        },
+                        dataType: "json"
+                    });
                 })
             }
 
