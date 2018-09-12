@@ -69,7 +69,7 @@ public class SubjectController {
     public String subjectList(HttpSession session, Model model){
         UserSession userSession = UserSessionFactory.getUserSession(session);
         if(null == userSession){
-            return "login";
+            return String.format("redirect:%suser/login", pathConfig.getWebsitePath()) ;
         }
         List<Subject> subjectList =  subjectService.selectByUserId(userSession.getUserId()).getData();
         model.addAttribute("list", subjectList);
