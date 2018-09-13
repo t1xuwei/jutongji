@@ -35,7 +35,7 @@ public class SubjectServiceImpl implements ISubjectService {
     @Override
     public Data<?> save(Subject subject) {
         Integer count = subjectMapper.countByCreatedByAndDeletedFalse(subject.getCreatedBy(), CommonConstants.NOT_DELTED);
-        if (count > CommonConstants.MAX_SUBJECT_NUM) {
+        if (count >= CommonConstants.MAX_SUBJECT_NUM) {
             return Data.failure("当前系统每个用户最多只允许创建十个主题");
         }
         subjectMapper.insertUseGeneratedKeys(subject);

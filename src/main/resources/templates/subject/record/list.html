@@ -21,7 +21,7 @@
     <input type="hidden" id="currentId" value="-1">
     <p>
         <button type="button" id="addRecord" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-            新建记录
+            签到记录
         </button>
     </p>
     <div id='calendar-container'></div>
@@ -50,8 +50,6 @@
                 endYear: 2049
             },
             mark: {
-                '2018-9-11': '上学',
-                '2018-9-9':'暑假作业'
             },
             theme: {
                 changeAble: false,
@@ -128,7 +126,8 @@
                         var markList = data.data;
                         for (var i=0;i<markList.length;i++)
                         {
-                            myCalendar.addMark(markList[i].createdAt, markList[i].desc);
+                            var desc = markList[i].desc == null ? ' ' : markList[i].desc ;
+                            myCalendar.addMark(markList[i].createdAt, desc);
                         }
                     },
                     dataType: "json"

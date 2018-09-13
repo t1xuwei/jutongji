@@ -11,8 +11,11 @@
     <link th:href="@{/static/bootstrap/css/bootstrap.css}" rel="stylesheet" type="text/css"/>
     <link th:href="@{/static/css/H-ui.login.css}" rel="stylesheet" type="text/css"/>
 
+
 </head>
 <body >
+<!--<div th:replace="common/navbar :: navbar" ></div>-->
+<div th:replace="common/navbar :: navbar" ></div>
 <h5>登录页面login.html</h5>
 <div id="loginform" class="loginBox">
     <form class="form form-horizontal" th:attr="action=${@pathConfig.getWebsitePath()}+'user/login'" method="post">
@@ -52,6 +55,7 @@
 </div>
 
 <script type="text/javascript" th:src="@{/static/js/jquery-3.2.1.js}"></script>
+<script type="text/javascript" th:src="@{/static/bootstrap/js/bootstrap.js}"></script>
 <script type="text/javascript">
     $(function(){
         Demo = function(){

@@ -1,0 +1,86 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link th:href="@{../static/bootstrap/css/bootstrap.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{../static/css/register.css}" rel="stylesheet" type="text/css"/>
+</head>
+<body th:attr="background=@{../static/images/007.jpg}">
+<div th:replace="common/navbar :: navbar" ></div>
+<div style="color: #fff; position: absolute; left: 380px; top: 360px;">
+    <h3>
+        <a href="#myModal" id="mya" data-toggle="modal" style="color:darkblue">START
+            JOURNEY HERE</a>
+    </h3>
+    <h5><a style="font-size:12px;color:darkblue" href="http://www.kaishengit.com">@徐威</a></h5>
+</div>
+<div style="background-color: #fff height:200px weight:100%"></div>
+< <!-- Modal -->
+<div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">用户注册</h4>
+            </div>
+            <div class="modal-body">
+                <form th:attr="action=${@pathConfig.getWebsitePath()}+'subject/add'" id="addForm" method="post">
+                    <div class="form-group">
+                        <label for="subjectName">主题名称</label>
+                        <input type="text" class="form-control" id="subjectName" name="subjectName" placeholder="">
+                    </div>
+                    <div class="form-group">
+                        <label for="subjectDesc">主题简介</label>
+                        <input type="text" class="form-control" name="subjectDesc" id="subjectDesc" placeholder="">
+                    </div>
+                    <button type="button" id="newSubjectButton" class="btn btn-default">提交</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <!--<button type="button" class="btn btn-primary">Save changes</button>-->
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" th:src="@{/static/js/jquery-3.2.1.js}"></script>
+<script type="text/javascript" th:src="@{/static/bootstrap/js/bootstrap.js}"></script>
+
+<script>
+    $(function(){
+        $("#btn").click(function(){
+            $("#form").validate({
+                errorElements: "span",
+                errorClass: "help-inline error",
+                rules:{
+                    pwd:{
+                        required:true
+                    },
+                    username:{
+                        required:true,
+                        remote:"/account/validate.do"
+                    }
+
+
+                },
+                messages:{
+                    pwd:{
+                        required:"请填写密码"
+
+                    },
+                    username:{
+                        required:"请输入用户名",
+                        remote:"该账号已被占用"
+                    }
+
+                }
+            });
+            $("#form").submit();
+        });
+    });
+
+</script>
+</body>
+</html>
