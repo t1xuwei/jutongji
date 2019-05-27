@@ -1,0 +1,72 @@
+﻿<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>日常小程序</title>
+	<meta http-equiv="pragma" content="no-cache" />
+	<meta http-equiv="cache-control" content="no-cache" />
+	<meta http-equiv="expires" content="0" />
+	<meta http-equiv="keywords" content="习惯" />
+	<meta http-equiv="description" content="仅供聚统计使用" />
+	<link th:href="@{../static/bootstrap/css/bootstrap.css}" rel="stylesheet" type="text/css"/>
+
+
+</head>
+<body >
+
+<div class="container">
+
+	<input type="hidden" id="demoCount" th:attr="value=${demoCount}">
+	<input type="hidden" id="currentId" value="-1">
+	<p><a class="btn btn-primary btn-lg" id="randomSelectButton" href="javascript:void(0);" role="button">戳这里</a></p>
+	<ul class="list-group">
+		<tr th:each ="demoObj,demoObjState:${demos}" >
+			<li class="list-group-item list-group-item-info" th:attr="id=demotitle+${demoObjState.index+1}"><td th:text="${demoObjState.index+1} + . + ${demoObj.title}"></td></li>
+		</tr>
+	</ul>
+</div>
+
+<script type="text/javascript" th:src="@{/static/js/jquery-3.2.1.js}"></script>
+<script type="text/javascript">
+    $(function(){
+        Demo = function(){
+
+        }
+        Demo.prototype = {
+            init:function(){
+                this.bindRandomSelectEvent();
+
+            },
+            // 绑定随机选择题目的事件
+            bindRandomSelectEvent:function(){
+                $("#randomSelectButton").on("click",function(){
+					console.log("hello");
+                    //清空之前选择的
+                    $(".list-group-item.list-group-item-danger").attr("class", "list-group-item list-group-item-info");
+                    var total = parseInt($("#demoCount").val());
+                    var id = getRandom(1,total);
+                    var currentId = parseInt($("#currentId").val());
+                    while(id == currentId){
+                        id = getRandom(1,total);
+                    }
+                    $("#currentId").val(id);
+                    //更改随机选中的颜色
+                    $("#demotitle"+id).attr("class","list-group-item list-group-item-danger");
+                })
+            }
+
+        }
+        var demo = new Demo();
+        function getRandom(min,max){
+            var range = max - min;
+            var rand = Math.random();
+            return min + Math.round(range * rand);
+        }
+
+        demo.init();
+    }())
+
+</script>
+
+</body>
+</html>
