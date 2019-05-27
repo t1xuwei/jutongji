@@ -61,6 +61,13 @@
             <artifactId>mybatis-spring-boot-starter</artifactId>
             <version>1.3.0</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/com.github.pagehelper/pagehelper-spring-boot-starter -->
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper-spring-boot-starter</artifactId>
+            <version>1.2.5</version>
+        </dependency>
+
 
         <dependency>
             <groupId>mysql</groupId>
@@ -294,7 +301,7 @@
                 <version>1.5.4.RELEASE</version>
                 <configuration>
                     <includeSystemScope>true</includeSystemScope>
-                    <mainClass>com.yitikeji.channelrouter.ChannelRouterApiApplication</mainClass>
+                    <mainClass>com.jutongji.JutongjiApplication</mainClass>
                 </configuration>
                 <executions>
                     <execution>

@@ -1,5 +1,5 @@
 server:
-  port: 81
+  port: 82
 spring:
     application:
       name: jutongji
