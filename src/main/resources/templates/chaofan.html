@@ -1,99 +1,138 @@
 ﻿<!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:position="http://www.w3.org/1999/xhtml">
 
 <head>
-	<title>超凡通信科技有限公司</title>
-	<meta http-equiv="pragma" content="no-cache" />
-	<meta http-equiv="cache-control" content="no-cache" />
-	<meta http-equiv="expires" content="0" />
-	<meta http-equiv="keywords" content="超凡通信科技有限公司" />
-	<meta http-equiv="description" content="超凡通信科技" />
-	<link th:href="@{../static/bootstrap/css/bootstrap.css}" rel="stylesheet" type="text/css"/>
+    <title>超凡通信科技有限公司</title>
+    <meta http-equiv="pragma" content="no-cache"/>
+    <meta http-equiv="cache-control" content="no-cache"/>
+    <meta http-equiv="expires" content="0"/>
+    <meta http-equiv="keywords" content="超凡通信科技有限公司"/>
+    <meta http-equiv="description" content="超凡通信科技"/>
+    <link th:href="@{../static/bootstrap/css/bootstrap.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{../static/lunbo/lunbo.css}" rel="stylesheet" type="text/css"/>
 
 
 </head>
 <body background="../static/img/007.jpg">
-<div class="navbar navbar-default navbar-fixed-top">
+<div class="navbar navbar-inverse navbar-fixed-top">
 
-	<div class="container">
-		<div class="navbar-header">
+    <div class="container">
+        <div class="navbar-header">
 
-			<button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target=".navbar-collapse">
-				<span class="sr-only">Toggle navigation</span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-			</button>
-			<a class="navbar-brand hidden-sm" href="http://115.159.149.177:81/chaofan" onclick="_hmt.push(['_trackEvent', 'navbar', 'click', 'navbar-首页'])">超凡通信科技有限公司</a>
-		</div>
-		<div class="navbar-collapse collapse" role="navigation">
-			<ul class="nav navbar-nav">
-				<!--<li class="hidden-sm hidden-md"><a href="https://v2.bootcss.com/"  target="_blank" onclick="_hmt.push(['_trackEvent', 'navbar', 'click', 'v2doc'])">Bootstrap2中文文档</a></li>
-				<li><a href="https://v3.bootcss.com/" target="_blank" onclick="_hmt.push(['_trackEvent', 'navbar', 'click', 'v3doc'])">Bootstrap3中文文档</a></li>
-				<li><a href="https://v4.bootcss.com/" target="_blank" onclick="_hmt.push(['_trackEvent', 'navbar', 'click', 'v4doc'])">Bootstrap4中文文档</a></li>
-				<li><a href="/p/lesscss/" target="_blank" onclick="_hmt.push(['_trackEvent', 'navbar', 'click', 'less'])">Less 教程</a></li>
-				<li><a href="https://www.jquery123.com/" target="_blank" onclick="_hmt.push(['_trackEvent', 'navbar', 'click', 'jquery'])">jQuery API</a></li>
-				<li><a class="reddot" href="http://www.youzhan.org/" target="_blank" onclick="_hmt.push(['_trackEvent', 'navbar', 'click', 'youzhan-main-nav'])">网站实例</a></li>-->
-			</ul>
-			<ul class="nav navbar-nav navbar-right hidden-sm">
-				<li><a href="/about/" onclick="_hmt.push(['_trackEvent', 'navbar', 'click', 'about'])">关于</a></li>
-			</ul>
-		</div>
-	</div>
-	<img src="../static/img/chaofan.jpg" width="200px"/>
+            <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand hidden-sm" href="http://115.159.149.177:81/chaofan"
+               onclick="_hmt.push(['_trackEvent', 'navbar', 'click', 'navbar-首页'])">超凡通信科技有限公司</a>
+        </div>
+        <div class="navbar-collapse collapse" role="navigation">
+            <ul class="nav navbar-nav">
+                <li class="hidden-sm hidden-md">
+                    <a href="javascript:void(0);"  data-container="body" data-placement="bottom"  data-toggle="popover" data-content="想展示啥内容">小姨</a>
+                </li>
+                <li class="hidden-sm hidden-md">
+                    <a href="javascript:void(0);"  data-container="body" data-placement="bottom"  data-toggle="popover" data-content="想展示啥内容">姨夫</a>
+                </li>
+                <!--<li><a href="/p/lesscss/" target="_blank" onclick="_hmt.push(['_trackEvent', 'navbar', 'click', 'less'])">Less 教程</a></li>
+                <li><a href="https://www.jquery123.com/" target="_blank" onclick="_hmt.push(['_trackEvent', 'navbar', 'click', 'jquery'])">jQuery API</a></li>
+                <li><a class="reddot" href="http://www.youzhan.org/" target="_blank" onclick="_hmt.push(['_trackEvent', 'navbar', 'click', 'youzhan-main-nav'])">网站实例</a></li>-->
+            </ul>
+            <ul class="nav navbar-nav navbar-right hidden-sm">
+                <li>
+                    <!--<button type="button" class="btn btn-default" data-container="body" data-toggle="popover" data-placement="bottom" data-content="经营项目是:光纤连接器、尾纤、适配器、光分路器、衰减器、波分复用器、光开关、准直器、环形器、光缆接续盒、光纤配线箱、光通信智能化设备的技术开发与销售;通信设备、通讯器材、测试仪器、电子元器件、物联网配套系统、计算机软件的技术开发(不含生产与加工)与销售;货物与技术进出口(以上均不含法律,行政法规,国务院决定禁止及规定需前置审批项目)">
+                        关于我们
+                    </button>-->
+                    <a href="javascript:void(0);"  onclick="_hmt.push(['_trackEvent', 'navbar', 'click', 'about'])" data-container="body" data-placement="bottom"  data-toggle="popover" data-content="经营项目是:光纤连接器、尾纤、适配器、光分路器、衰减器、波分复用器、光开关、准直器、环形器、光缆接续盒、光纤配线箱、光通信智能化设备的技术开发与销售;通信设备、通讯器材、测试仪器、电子元器件、物联网配套系统、计算机软件的技术开发(不含生产与加工)与销售;货物与技术进出口(以上均不含法律,行政法规,国务院决定禁止及规定需前置审批项目)" >关于</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <img src="../static/img/chaofan.jpg" width="200px" style="position:absolute;"/>
 </div>
 <div class="container">
 
-	<input type="hidden" id="demoCount" th:attr="value=${demoCount}">
-	<input type="hidden" id="currentId" value="-1">
-	<p><a class="btn btn-primary btn-lg" id="randomSelectButton" href="javascript:void(0);" role="button">戳这里</a></p>
-	<ul class="list-group">
-		<tr th:each ="demoObj,demoObjState:${demos}" >
-			<li class="list-group-item list-group-item-info" th:attr="id=demotitle+${demoObjState.index+1}"><td th:text="${demoObjState.index+1} + . + ${demoObj.title}"></td></li>
-		</tr>
-	</ul>
+    <div id="banner"  style="position:absolute;">
+        <div id="banner_bg">
+        </div>
+        <!--标题背景-->
+        <div id="banner_info">
+        </div>
+        <!--标题-->
+        <ul>
+            <li class="on">
+                1
+            </li>
+            <li>
+                2
+            </li>
+            <li>
+                3
+            </li>
+            <li>
+                4
+            </li>
+        </ul>
+        <div id="banner_list">
+            <a href="#" target="_blank">
+                <img src="../static/img/guangqian/p4.jpg" title="光纤" alt="光纤" style="width:472px"/>
+            </a>
+            <a href="#" target="_blank">
+                <img src="../static/img/guangqian/p2.jpg" title="光纤" alt="光纤" style="width:472px"/>
+            </a>
+            <a href="#" target="_blank">
+                <img src="../static/img/guangqian/p3.jpg" title="光纤" alt="光纤" style="width:472px"/>
+            </a>
+            <a href="#" target="_blank">
+                <img src="../static/img/guangqian/p1.jpg" title="光纤" alt="光纤" style="width:472px"/>
+            </a>
+        </div>
+    </div>
 </div>
 
+
+
 <script type="text/javascript" th:src="@{/static/js/jquery-3.2.1.js}"></script>
+<script type="text/javascript" th:src="@{/static/bootstrap/js/bootstrap.js}"></script>
 <script type="text/javascript">
-    $(function(){
-        Demo = function(){
-
-        }
-        Demo.prototype = {
-            init:function(){
-                this.bindRandomSelectEvent();
-
+    var t = n = 0,
+        count;
+    $(document).ready(function() {
+        $('[data-toggle="popover"]').popover();
+        count = $("#banner_list a").length;
+        $("#banner_list a:not(:first-child)").hide();
+        $("#banner_info").html($("#banner_list a:first-child").find("img").attr('alt'));
+        $("#banner_info").click(function() {
+            window.open($("#banner_list a:first-child").attr('href'), "_blank")
+        });
+        $("#banner li").click(function() {
+            var i = $(this).text() - 1; //获取Li元素内的值，即1，2，3，4
+            n = i;
+            if (i >= count) return;
+            $("#banner_info").html($("#banner_list a").eq(i).find("img").attr('alt'));
+            $("#banner_info").unbind().click(function() {
+                window.open($("#banner_list a").eq(i).attr('href'), "_blank")
+            });
+            $("#banner_list a").filter(":visible").fadeOut(500).parent().children().eq(i).fadeIn(1000);
+            document.getElementById("banner").style.background = "";
+            $(this).toggleClass("on");
+            $(this).siblings().removeAttr("class");
+        });
+        t = setInterval("showAuto()", 3500);
+        $("#banner").hover(function() {
+                clearInterval(t)
             },
-            // 绑定随机选择题目的事件
-            bindRandomSelectEvent:function(){
-                $("#randomSelectButton").on("click",function(){
-					console.log("hello");
-                    //清空之前选择的
-                    $(".list-group-item.list-group-item-danger").attr("class", "list-group-item list-group-item-info");
-                    var total = parseInt($("#demoCount").val());
-                    var id = getRandom(1,total);
-                    var currentId = parseInt($("#currentId").val());
-                    while(id == currentId){
-                        id = getRandom(1,total);
-                    }
-                    $("#currentId").val(id);
-                    //更改随机选中的颜色
-                    $("#demotitle"+id).attr("class","list-group-item list-group-item-danger");
-                })
-            }
+            function() {
+                t = setInterval("showAuto()", 3500);
+            });
+    });
 
-        }
-        var demo = new Demo();
-        function getRandom(min,max){
-            var range = max - min;
-            var rand = Math.random();
-            return min + Math.round(range * rand);
-        }
-
-        demo.init();
-    }())
-
+    function showAuto() {
+        n = n >= (count - 1) ? 0 : ++n;
+        $("#banner li").eq(n).trigger('click');
+    }
 </script>
 
 </body>
